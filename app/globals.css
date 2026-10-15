@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Base — tipografia refinada, foco visível e respeito a prefers-reduced-motion
+--------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-champagne text-graphite font-sans antialiased;
+  }
+
+  ::selection {
+    background-color: rgba(176, 141, 87, 0.22);
+  }
+
+  /* Âncoras param abaixo do header fixo */
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  /* Foco visível e elegante em toda a página */
+  :focus-visible {
+    outline: none;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid rgba(176, 141, 87, 0.85);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(76, 92, 72, 0.35) transparent;
+  }
+
+  /* Webkit */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(76, 92, 72, 0.28);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+}
+
+@layer components {
+  /* Eyebrow/kicker: linha + texto em caixa alta espaçada */
+  .kicker {
+    @apply inline-flex items-center gap-3 text-[0.66rem] font-medium uppercase tracking-luxe text-gold;
+  }
+
+  .kicker::before {
+    content: '';
+    @apply h-px w-8 bg-gold/60;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-full bg-olive px-8 py-4 text-[0.78rem] font-semibold uppercase tracking-wide2 text-champagne-light shadow-btn transition-all duration-500 ease-luxe hover:bg-olive-deep hover:shadow-soft active:scale-[0.97];
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-full border border-graphite/15 bg-transparent px-8 py-4 text-[0.78rem] font-semibold uppercase tracking-wide2 text-graphite transition-all duration-500 ease-luxe hover:border-gold/60 hover:bg-white/50 hover:text-olive-deep active:scale-[0.97];
+  }
+
+  .btn-on-dark {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-full border border-white/25 bg-white/10 px-8 py-4 text-[0.78rem] font-semibold uppercase tracking-wide2 text-white backdrop-blur-md transition-all duration-500 ease-luxe hover:border-white/50 hover:bg-white/20 active:scale-[0.97];
+  }
+
+  .field-input {
+    @apply w-full rounded-xl border border-graphite/[0.12] bg-white/70 px-5 py-3.5 text-[0.95rem] text-graphite placeholder:text-graphite-faint/70 transition-all duration-300 ease-luxe hover:border-graphite/25 focus:border-gold/70 focus:bg-white focus:shadow-card;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+/* Reduz animações globais para quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
