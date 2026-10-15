@@ -1,0 +1,28 @@
+rules_version = '2';
+
+// Regras do Firestore para o RSVP do site de casamento.
+// Visitantes podem apenas CRIAR confirmações válidas.
+// A leitura dos dados acontece pelo Console do Firebase (regras não se aplicam
+// a contas administrativas) — ninguém consegue ler as confirmações pelo site.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /rsvps/{rsvpId} {
+      allow create: if request.resource.data.name is string
+        && request.resource.data.name.size() >= 3
+        && request.resource.data.name.size() <= 120
+        && request.resource.data.phone is string
+        && request.resource.data.phone.size() >= 8
+        && request.resource.data.attending is bool
+        && request.resource.data.companions is int
+        && request.resource.data.companions >= 0
+        && request.resource.data.companions <= 5;
+
+      allow read, update, delete: if false;
+    }
+
+    // Nada mais é acessível publicamente.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
